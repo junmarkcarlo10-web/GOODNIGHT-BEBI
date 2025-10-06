@@ -70,6 +70,17 @@
       animation: fadeInImg 2.5s ease-in-out forwards;
       animation-delay: 1s;
     }
+    #playMusicBtn {
+      display: none;
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background-color: #9370db;
+      color: white;
+      cursor: pointer;
+    }
     @keyframes fadeInText {
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
@@ -109,31 +120,48 @@
   <div class="final-msg" id="finalMsg">
     <div>GOODNIGHT BABYYY CHIN CHIN KO 💜</div>
     <img id="goodnightImg" src="image.jpg" alt="Goodnight Image">
-    <audio id="bgMusic" src="goodnight.mp3" autoplay></audio>
   </div>
 
+  <audio id="bgMusic" src="pusongligaw.mp3"></audio>
+  <button id="playMusicBtn">Play Music 💜</button>
+
   <script>
+    const passwordInput = document.getElementById('passwordInput');
+    const video = document.getElementById('theVideo');
+    const finalMsg = document.getElementById('finalMsg');
+    const bgMusic = document.getElementById('bgMusic');
+    const playMusicBtn = document.getElementById('playMusicBtn');
+
     function checkPassword() {
-      const input = document.getElementById('passwordInput').value;
-      if (input === '030309') {
+      if (passwordInput.value === '030309') {
         document.querySelector('.password-container').style.display = 'none';
         document.getElementById('clue').style.display = 'none';
         document.getElementById('title').style.display = 'none';
-        const video = document.getElementById('theVideo');
         video.style.display = 'block';
         video.play();
-        video.onended = function() {
-          video.style.display = 'none';
-          document.body.classList.add('glow-bg');
-          const finalMsg = document.getElementById('finalMsg');
-          finalMsg.style.display = 'flex';
-          finalMsg.style.opacity = '1';
-          document.getElementById('bgMusic').play();
-        };
       } else {
         alert('Mali baby 😭 try again 💜');
       }
     }
+
+    video.onended = function() {
+      video.style.display = 'none';
+      document.body.classList.add('glow-bg');
+      finalMsg.style.display = 'flex';
+      finalMsg.style.opacity = '1';
+
+      const playPromise = bgMusic.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Mobile blocked autoplay, show button
+          playMusicBtn.style.display = 'inline-block';
+          playMusicBtn.onclick = () => {
+            bgMusic.play();
+            playMusicBtn.style.display = 'none';
+          };
+        });
+      }
+    };
   </script>
 </body>
 </html>
