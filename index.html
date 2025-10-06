@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goodnight Babyy</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #d8bfd8, #e6e6fa);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      transition: background 2s ease-in-out;
+    }
+    h1 {
+      color: #6a0dad;
+      font-size: 2em;
+      margin-bottom: 15px;
+    }
+    .password-container input {
+      padding: 10px;
+      border: 2px solid #b19cd9;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+      font-size: 16px;
+    }
+    .password-container button {
+      margin-left: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #9370db;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .password-container button:hover {
+      background-color: #8a2be2;
+    }
+    video {
+      display: none;
+      max-width: 90%;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+    .open-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background-color: #9370db;
+      color: white;
+      cursor: pointer;
+    }
+    .final-msg {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      font-size: 2em;
+      color: #6a0dad;
+      font-weight: bold;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeInText 2s ease-in-out forwards;
+    }
+    .final-msg img {
+      width: 250px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      opacity: 0;
+      animation: fadeInImg 2.5s ease-in-out forwards;
+      animation-delay: 1s;
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInImg {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .clue {
+      color: #7a42f4;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    .glow-bg {
+      background: linear-gradient(135deg, #e6ccff, #f3e8ff, #e6ccff);
+      animation: glow 6s infinite alternate ease-in-out;
+    }
+    @keyframes glow {
+      0% { background: linear-gradient(135deg, #e6ccff, #f3e8ff); }
+      100% { background: linear-gradient(135deg, #f3e8ff, #e6ccff); }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">Para Makatulog Na Yung Baby Ko 💫</h1>
+  <div class="password-container">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+  <p class="clue" id="clue">Clue: number ng birthday 💜</p>
+
+  <video id="theVideo" controls playsinline>
+    <source src="myvideo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Open button appears after video ends -->
+  <button class="open-btn" id="openBtn">Open 💜</button>
+
+  <div class="final-msg" id="finalMsg">
+    <div>GOODNIGHT BABYYY CHIN CHIN KO 💜</div>
+    <img id="goodnightImg" src="image.jpg" alt="Goodnight Image">
+    <audio id="bgMusic" src="goodnight.mp3"></audio>
+  </div>
+
+  <script>
+    const video = document.getElementById('theVideo');
+    const finalMsg = document.getElementById('finalMsg');
+    const openBtn = document.getElementById('openBtn');
+    const bgMusic = document.getElementById('bgMusic');
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      if (input === '030309') {
+        document.querySelector('.password-container').style.display = 'none';
+        document.getElementById('clue').style.display = 'none';
+        document.getElementById('title').style.display = 'none';
+        video.style.display = 'block';
+        video.play();
+        video.onended = function() {
+          video.style.display = 'none';
+          openBtn.style.display = 'inline-block'; // Show open button
+        };
+      } else {
+        alert('Mali baby 😭 try again 💜');
+      }
+    }
+
+    openBtn.addEventListener('click', () => {
+      openBtn.style.display = 'none';
+      document.body.classList.add('glow-bg');
+      finalMsg.style.display = 'flex';
+      finalMsg.style.opacity = '1';
+      bgMusic.play(); // user click triggers music
+    });
+  </script>
+</body>
+</html>
