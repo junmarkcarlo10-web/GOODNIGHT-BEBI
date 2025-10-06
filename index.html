@@ -150,10 +150,11 @@
       finalMsg.style.display = 'flex';
       finalMsg.style.opacity = '1';
 
+      // Attempt to play music (may fail on mobile)
       const playPromise = bgMusic.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Mobile blocked autoplay, show button
+          // If blocked, show button for user
           playMusicBtn.style.display = 'inline-block';
           playMusicBtn.onclick = () => {
             bgMusic.play();
